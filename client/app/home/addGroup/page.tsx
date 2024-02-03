@@ -66,12 +66,12 @@ const Add = () => {
             <div className="text-2xl">{group.name}</div>
             <div
 
-              onClick={() => {
+              onClick={() => {async () => {
+                await joinGroup(group._id); 
                 dispatch(addGroup(group.name));
                 // set user.group to "group.name"
                 router.push("/home");
-              }}
-            >
+              }}}>
               <IoMdAdd className="cursor-pointer" size={30} />
             </div>
           </Flex>
