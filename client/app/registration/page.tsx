@@ -22,6 +22,12 @@ const Registration = () => {
     group: "",
   });
 
+  const createUser = () => {
+    console.log(state["name"]);
+    // axios post
+    // name: state["name"]
+  };
+
   const renderContent = () => {
     switch (page) {
       case 0:
@@ -99,7 +105,7 @@ const Registration = () => {
               className="registrationArrow"
               onClick={() => {
                 router.push("/home");
-                //save data
+                createUser();
               }}
             >
               <FaArrowRightLong size={50} />
@@ -210,7 +216,7 @@ const Registration = () => {
               className="registrationArrow"
               onClick={() => {
                 router.push("/home");
-                //save data
+                createUser();
               }}
             >
               <FaArrowRightLong size={50} />
