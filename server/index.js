@@ -290,6 +290,27 @@ app.get("/group", async (req, res) => {
 })
 
 // post routes ========================================================**
+/**
+ * @route GET /posts
+ * @desc Get every single post from the database
+ * @access Public
+ */
+app.get("/posts", async (req, res) => {
+  try {
+    await Post.find()
+    .populate("creator", "username")
+    .then(posts => {
+      if(!posts){
+        return res.status(404).json({ posts: []}); 
+      } 
+      res.status(200).json(posts);
+    })
+  } catch(err){
+    console.log(err.message)
+    res.status(500).json({ message: "Server error"})
+  }
+})
+
 /* @route POST /users/:user_id/friend
 * @desc Add a friend
 * @access Public
