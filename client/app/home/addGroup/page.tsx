@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 
 interface Groups {
+  _id: string; 
   name: string;
 }
 
@@ -14,6 +15,7 @@ const Add = () => {
   const router = useRouter();
   const names = ["Bao", "Ruby", "Linh"];
   const [groups, setGroups] = useState<Groups[]>([]);
+  const user_id = "65be7d6482b530c5e909f1f4" // @todo change ruby's user id to dynamic var
 
   const getGroups = async () => {
     try {
@@ -23,6 +25,16 @@ const Add = () => {
       console.log(err);
     }
   };
+
+  const joinGroup = async (group_id: String) => {
+    try {
+      const jsonData = {"user_id": user_id}
+
+      let res = await axios.post(`http://localhost:4000/group/${group_id}/join`, jsonData);
+    } catch(err){
+      console.log(err)
+    }
+  }
 
   useEffect(() => {
     getGroups();
@@ -50,7 +62,8 @@ const Add = () => {
           >
             <div className="text-2xl">{group.name}</div>
             <div
-              onClick={() => {
+              onClick={async () => {
+                await joinGroup(group._id); 
                 router.push("/home");
               }}
             >
