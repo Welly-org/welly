@@ -12,15 +12,15 @@ const Home = () => {
   const router = useRouter();
   const empty = false;
 
-  //   const [amount, setAmount] = useState(0);
-  //   const [selected, setSelected] = useState(true);
-  //   const [money, setMoney] = useState(false);
-  //   const [task, setTask] = useState(true);
-
-  const [amount, setAmount] = useState(30);
+  const [amount, setAmount] = useState(0);
   const [selected, setSelected] = useState(true);
-  const [money, setMoney] = useState(true);
-  const [task, setTask] = useState(false);
+  const [money, setMoney] = useState(false);
+  const [task, setTask] = useState(true);
+
+  //   const [amount, setAmount] = useState(30);
+  //   const [selected, setSelected] = useState(true);
+  //   const [money, setMoney] = useState(true);
+  //   const [task, setTask] = useState(false);
 
   return (
     <Flex
