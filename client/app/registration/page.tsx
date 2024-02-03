@@ -5,6 +5,9 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { lily } from "../font";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { logIn } from "@/redux/features/auth-slice";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/redux/store";
 
 interface User {
   username: string;
@@ -12,7 +15,7 @@ interface User {
 }
 const Registration = () => {
   const router = useRouter();
-
+  const dispatch = useDispatch<AppDispatch>();
   const questions = [
     "What's your name?",
     "Do you have a group?",
@@ -30,11 +33,9 @@ const Registration = () => {
   const createUser = async () => {
     try {
       const jsonData = { username: state.username };
-
       // axios post
       const res = await axios.post("http://localhost:4000/users", jsonData);
-
-      // add res.data._id to header
+      dispatch(logIn(res.data._id));
     } catch (err) {
       ("hit 3");
     }

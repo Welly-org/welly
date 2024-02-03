@@ -1,16 +1,20 @@
 "use client";
+import { useAppSelector } from "@/redux/store";
 import { Flex } from "@radix-ui/themes";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 import { VscTriangleLeft, VscTriangleRight } from "react-icons/vsc";
 import { Header } from "../components/Header";
 import { lily } from "../font";
 import Progress from "./Progress.json";
 import ProgressBar from "./ProgressBar";
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
 
 const Home = () => {
   const router = useRouter();
-  const empty = true;
+
+  const user_id = useAppSelector((state) => state.authReducer.value._id);
+  console.log(user_id);
+  const empty = false;
 
   const [amount, setAmount] = useState(0);
   const [selected, setSelected] = useState(true);
