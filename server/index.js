@@ -268,6 +268,26 @@ app.post("/group/:group_id", jsonParser, async (req, res) => {
     res.status(500).json({ message: "Server Error"}); 
   }
 })
+
+/**
+ * @route GET /group
+ * @desc Get a list of all the groups
+ * @access Public
+ */
+app.get("/group", async (req, res) => {
+  try {
+    await Group.find().then(groups => {
+      if(!groups){
+        return res.status(404).json({ groups: []})
+      }
+      return res.status(200).json(groups); 
+    })
+  } catch(err){
+    console.log(err.message); 
+    res.status(500).json({ message: "Server error"}); 
+  }
+})
+
 // post routes ========================================================**
 /* @route POST /users/:user_id/friend
 * @desc Add a friend
