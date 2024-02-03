@@ -5,13 +5,16 @@ import { Header } from "../components/Header";
 import { lily } from "../font";
 import Progress from "./Progress.json";
 import ProgressBar from "./ProgressBar";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 const Home = () => {
+  const user_id = "65be7d6482b530c5e909f1f4" // @todo fetch user id from somewhere
   const router = useRouter();
   const empty = true;
 
+  const [user, setUser] = useState({}); 
+  const [isLoading, setIsLoading] = useState(true);
   const [amount, setAmount] = useState(0);
   const [selected, setSelected] = useState(true);
   const [money, setMoney] = useState(false);
@@ -22,6 +25,9 @@ const Home = () => {
   //   const [money, setMoney] = useState(true);
   //   const [task, setTask] = useState(false);
 
+  useEffect(() => {
+    // load user
+  }, [])
   return (
     <Flex
       direction="column"
