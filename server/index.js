@@ -115,6 +115,28 @@ app.post("/users/:user_id/friend", jsonParser, async (req,res) => {
   }
 }); 
 
+/**
+ * @route POST /topusers
+ * @desc Get other peoples' progress
+ * @access Public
+ */
+// for now this just returns everyone's progress, instead of just the user's friends 
+app.get("/topusers", async (req, res) => {
+	try {
+		await User.find()
+		.select(['username', 'progress'])
+		.then(user => {
+			if(!user){
+				return res.status(404).json({ message: "Users not found"});
+			}
+			res.status(200).json(user);
+		})
+	} catch(err){
+		console.log(err.message); 
+		res.status(500).json({ message: "Server Error"})
+	}
+})
+
 /** 
 * @route POST /users
 * @desc Create a user based on username
@@ -218,6 +240,7 @@ app.get("/group/:group_id", async (req, res) => {
  * @access Public
  */
 app.post("/group/:group_id/join", jsonParser, async (req, res) => {
+	console.log("hit")
   try {
     const user = await User.findOne({ _id: req.body.user_id }); 
     

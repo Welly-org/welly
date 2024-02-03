@@ -7,10 +7,10 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { addGroup } from "@/redux/features/auth-slice";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/redux/store";
+import { AppDispatch, useAppSelector } from "@/redux/store";
 
 interface Groups {
-  _id: string; 
+  _id: string;
   name: string;
 }
 
@@ -18,7 +18,7 @@ const Add = () => {
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
   const [groups, setGroups] = useState<Groups[]>([]);
-  const user_id = "65be7d6482b530c5e909f1f4" // @todo change ruby's user id to dynamic var
+  const user_id = useAppSelector((state) => state.authReducer.value._id);
 
   const getGroups = async () => {
     try {
@@ -30,14 +30,18 @@ const Add = () => {
   };
 
   const joinGroup = async (group_id: String) => {
+    console.log(user_id);
     try {
-      const jsonData = {"user_id": user_id}
-
-      let res = await axios.post(`http://localhost:4000/group/${group_id}/join`, jsonData);
-    } catch(err){
-      console.log(err)
+      const jsonData = { user_id: user_id };
+      let res = await axios.post(
+        `http://localhost:4000/group/${group_id}/join`,
+        jsonData
+      );
+      console.log(res);
+    } catch (err) {
+      console.log(err);
     }
-  }
+  };
 
   useEffect(() => {
     getGroups();
@@ -65,13 +69,14 @@ const Add = () => {
           >
             <div className="text-2xl">{group.name}</div>
             <div
-
-              onClick={() => {async () => {
-                await joinGroup(group._id); 
+              onClick={async () => {
+                console.log("clicked");
+                await joinGroup(group._id);
                 dispatch(addGroup(group.name));
                 // set user.group to "group.name"
                 router.push("/home");
-              }}}>
+              }}
+            >
               <IoMdAdd className="cursor-pointer" size={30} />
             </div>
           </Flex>
