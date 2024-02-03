@@ -9,7 +9,7 @@ type AuthState = {
 	_id: string;
 	username: string;
 	progress: number;
-	groups: [];
+	groups: string;
 	friends: []
 }
 
@@ -19,7 +19,7 @@ const initialState = {
 		_id: "",
 		username: "",
 		progress: 0,
-		groups: [],
+		groups: "",
 		friends: []
 	} as AuthState, 
 } as InitialState; 
@@ -33,18 +33,33 @@ export const auth = createSlice({
 		},
 		logIn: (state, action: PayloadAction) => {
 			return {
+				...state,
 				value: {
-					isAuth: true,
-					_id: action.payload,
-					username: "",
-					progress: 0,
-					groups: [],
-					friends: []
-				}
+				  ...state.value,
+				  _id: action.payload,
+				},
 			}
-		}
+		},
+		setName: (state, action: PayloadAction) => {
+			return {
+				...state,
+				value: {
+				  ...state.value,
+				  username: action.payload,
+				},
+			}
+		},
+		addGroup: (state, action: PayloadAction) => {
+			return {
+				...state,
+				value: {
+				  ...state.value,
+				  groups: action.payload,
+				},
+			  };
+		},
 	}
 });
 
-export const {logIn, logOut} = auth.actions;
+export const {logIn, logOut, setName, addGroup,} = auth.actions;
 export default auth.reducer;

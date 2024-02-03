@@ -5,14 +5,17 @@ import React, { useEffect, useState } from "react";
 import { IoMdAdd } from "react-icons/io";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { addGroup } from "@/redux/features/auth-slice";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/redux/store";
 
 interface Groups {
   name: string;
 }
 
 const Add = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
-  const names = ["Bao", "Ruby", "Linh"];
   const [groups, setGroups] = useState<Groups[]>([]);
 
   const getGroups = async () => {
@@ -51,6 +54,8 @@ const Add = () => {
             <div className="text-2xl">{group.name}</div>
             <div
               onClick={() => {
+                dispatch(addGroup(group.name));
+                // set user.group to "group.name"
                 router.push("/home");
               }}
             >

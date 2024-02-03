@@ -11,7 +11,6 @@ import ProgressBar from "./ProgressBar";
 
 const Home = () => {
   const router = useRouter();
-
   const user_id = useAppSelector((state) => state.authReducer.value._id);
   console.log(user_id);
   const empty = false;
