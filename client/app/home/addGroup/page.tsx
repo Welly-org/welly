@@ -1,13 +1,30 @@
 "use client";
 import { Header } from "@/app/components/Header";
 import { Flex } from "@radix-ui/themes";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { IoMdAdd } from "react-icons/io";
 import { useRouter } from "next/navigation";
+import axios from 'axios'; 
 
 const Add = () => {
   const router = useRouter();
   const names = ["Bao", "Ruby", "Linh"];
+  const [groups, setGroups ] = useState([]); 
+  
+  const getGroups = async () => {
+    try {
+      let res = await axios.get("http://localhost:4000/group"); 
+
+      setGroups(res.data);
+    } catch(err){
+      console.log(err)
+    }
+  }
+
+  useEffect(() => {
+    getGroups()
+  }, []); 
+
   return (
     <Flex
       direction="column"
