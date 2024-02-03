@@ -20,13 +20,12 @@ const Profile = () => {
 
   const getUser = async () => {
     try {
-      let data = await axios.get(
+      let res = await axios.get(
         "http://localhost:4000/users/65b9c8665d118eb8717acc5a"
       );
-      console.log(data.data);
       setUser({
-        name: data.data.username,
-        groups: data.data.groups,
+        name: res.data.username,
+        groups: res.data.groups,
       });
     } catch (err) {
       console.log(err);

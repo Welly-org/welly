@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 
 const Home = () => {
   const router = useRouter();
-  const empty = false;
+  const empty = true;
 
   const [amount, setAmount] = useState(0);
   const [selected, setSelected] = useState(true);
@@ -63,7 +63,7 @@ const Home = () => {
         </Flex>
         {empty ? (
           <>
-            <div className="text-darkbrown text-4xl mt-20">No Members</div>
+            <div className="text-darkbrown text-4xl mt-20">No Groups</div>
             <Flex
               justify="center"
               align="center"
@@ -72,7 +72,7 @@ const Home = () => {
               }}
               className="text-darkbrown text-3xl w-40 h-16 rounded-3xl cursor-pointer mt-16 bg-orange"
             >
-              Add
+              Join
             </Flex>
           </>
         ) : (
