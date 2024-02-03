@@ -4,8 +4,12 @@ import React, { useState } from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { lily } from "../font";
 import { useRouter } from "next/navigation";
-import axios from 'axios'; 
+import axios from "axios";
 
+interface User {
+  username: string;
+  group: string;
+}
 const Registration = () => {
   const router = useRouter();
 
@@ -18,24 +22,24 @@ const Registration = () => {
     "Invite your friends!",
   ];
   const [page, setPage] = useState(0);
-  const [state, setState] = useState({
+  const [state, setState] = useState<User>({
     username: "",
     group: "",
   });
 
   const createUser = async () => {
-    console.log("username;")
+    console.log("username;");
     console.log(state.username);
-    console.log("hit 1")
+    console.log("hit 1");
     try {
-      const jsonData = { "username" : state.username }
+      const jsonData = { username: state.username };
 
       // axios post
-      const res = await axios.post("http://localhost:4000/users", jsonData); 
-      console.log("hit 2")
-      console.log(res); 
-    } catch(err){
-      "hit 3"
+      const res = await axios.post("http://localhost:4000/users", jsonData);
+      console.log("hit 2");
+      console.log(res);
+    } catch (err) {
+      ("hit 3");
       console.log(err);
     }
   };
@@ -49,7 +53,7 @@ const Registration = () => {
               type="text"
               placeholder="Enter Name"
               className="registrationInput"
-              value={state.name}
+              value={state.username}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setState((prevState) => ({
                   ...prevState,
@@ -62,8 +66,7 @@ const Registration = () => {
               align="center"
               className="registrationArrow"
               onClick={async () => {
-                await createUser(); 
-                
+                await createUser();
                 setPage((prevPage) => prevPage + 1);
               }}
             >
@@ -118,10 +121,6 @@ const Registration = () => {
               align="center"
               className="registrationArrow"
               onClick={() => {
-                // if(state.username != ""){
-                //   createUser();
-                // }
-
                 router.push("/home");
               }}
             >
@@ -233,7 +232,6 @@ const Registration = () => {
               className="registrationArrow"
               onClick={() => {
                 router.push("/home");
-                createUser();
               }}
             >
               <FaArrowRightLong size={50} />
