@@ -27,7 +27,11 @@ const GroupSchema = new mongoose.Schema({
             ref: 'goal', 
             default: []
         }
-    ]
+    ], 
+	pledge: {
+		type: Number, 
+		default: 0
+	}
 });
 
 module.exports = Group = mongoose.model('group', GroupSchema);

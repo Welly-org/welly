@@ -5,21 +5,24 @@ type InitialState = {
 }
 
 type AuthState = {
-	isAuth: boolean;
 	_id: string;
 	username: string;
 	progress: number;
-	groups: string;
+	groups: Group[];
 	friends: []
+}
+
+type Group = {
+	_id: string;
+	name: string;
 }
 
 const initialState = {
 	value: {
-		isAuth: false,
 		_id: "",
 		username: "",
 		progress: 0,
-		groups: "",
+		groups: [],
 		friends: []
 	} as AuthState, 
 } as InitialState; 
@@ -54,7 +57,7 @@ export const auth = createSlice({
 				...state,
 				value: {
 				  ...state.value,
-				  groups: action.payload,
+				  groups: [...state.value.groups, action.payload],
 				},
 			  };
 		},
