@@ -28,19 +28,15 @@ const Registration = () => {
   });
 
   const createUser = async () => {
-    console.log("username;");
-    console.log(state.username);
-    console.log("hit 1");
     try {
       const jsonData = { username: state.username };
 
       // axios post
       const res = await axios.post("http://localhost:4000/users", jsonData);
-      console.log("hit 2");
-      console.log(res);
+
+      // add res.data._id to header
     } catch (err) {
       ("hit 3");
-      console.log(err);
     }
   };
 
