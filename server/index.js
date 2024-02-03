@@ -5,6 +5,8 @@ const bodyParser = require("body-parser");
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = "mongodb+srv://wellyadmin:WellyPa552024@cluster0.d1vcezb.mongodb.net/?retryWrites=true&w=majority";
 
+const cors = require('cors');
+
 // import model schemas 
 const User = require("./models/User"); 
 const Post = require("./models/Post"); 
@@ -21,6 +23,7 @@ const client = new MongoClient(uri, {
   });
 
 const app = express(); 
+app.use(cors());
 
 // connect mongoose 
 mongoose.connect('mongodb+srv://wellyadmin:WellyPa552024@cluster0.d1vcezb.mongodb.net/welly'); 
@@ -48,7 +51,8 @@ app.get("/users/:user_id", async (req, res) => {
           if(!user){
             return res.status(404).json({ message: "User not found"});
           } 
-          res.status(200).json(user); // return user
+          console.log("success from server"); 
+          return res.status(200).json(user); // return user
         })
         .catch(err => {
           return res.status(404).json({ message: "Something went wrong"}); 
