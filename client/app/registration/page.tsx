@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { lily } from "../font";
 import { useRouter } from "next/navigation";
+import axios from 'axios'; 
 
 const Registration = () => {
   const router = useRouter();
@@ -18,14 +19,25 @@ const Registration = () => {
   ];
   const [page, setPage] = useState(0);
   const [state, setState] = useState({
-    name: "",
+    username: "",
     group: "",
   });
 
-  const createUser = () => {
-    console.log(state["name"]);
-    // axios post
-    // name: state["name"]
+  const createUser = async () => {
+    console.log("username;")
+    console.log(state.username);
+    console.log("hit 1")
+    try {
+      const jsonData = { "username" : state.username }
+
+      // axios post
+      const res = await axios.post("http://localhost:4000/users", jsonData); 
+      console.log("hit 2")
+      console.log(res); 
+    } catch(err){
+      "hit 3"
+      console.log(err);
+    }
   };
 
   const renderContent = () => {
@@ -41,7 +53,7 @@ const Registration = () => {
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setState((prevState) => ({
                   ...prevState,
-                  name: e.target.value,
+                  username: e.target.value,
                 }));
               }}
             />
@@ -49,7 +61,9 @@ const Registration = () => {
               justify="center"
               align="center"
               className="registrationArrow"
-              onClick={() => {
+              onClick={async () => {
+                await createUser(); 
+                
                 setPage((prevPage) => prevPage + 1);
               }}
             >
@@ -104,8 +118,11 @@ const Registration = () => {
               align="center"
               className="registrationArrow"
               onClick={() => {
+                // if(state.username != ""){
+                //   createUser();
+                // }
+
                 router.push("/home");
-                createUser();
               }}
             >
               <FaArrowRightLong size={50} />

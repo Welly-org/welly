@@ -114,6 +114,29 @@ app.post("/users/:user_id/friend", jsonParser, async (req,res) => {
   }
 }); 
 
+/** 
+* @route POST /users
+* @desc Create a user based on username
+* @access Public
+*/
+app.post("/users", jsonParser, async (req, res) => {
+  console.log("hit")
+  try {
+    const userData = { 
+      username: req.body.username
+    }; 
+
+    console.log(userData);
+    const user = new User(userData);
+    await user.save(); 
+
+    res.status(200).json(user); 
+  } catch(err){
+    console.log(err.message); 
+    res.status(500).json({ message: "Server error"}); 
+  }
+}); 
+
 // Group routes =======================================================================================================================
 /**
  * @route POST /group
@@ -314,23 +337,6 @@ app.post("/groups/:group_id/posts", jsonParser, async (req, res) => {
 
 app.get("/", (req, res) => {
   res.send("Hello, World"); 
-}); 
-
-// temporary: create a new user
-app.post("/users", jsonParser, async (req, res) => {
-  try {
-    const userData = { 
-      username: req.body.username
-    }; 
-
-    const user = new User(userData);
-    await user.save(); 
-
-    res.status(200).json({ message: "User created"}); 
-  } catch(err){
-    console.log(err.message); 
-    res.status(500).json({ message: "Server error"}); 
-  }
 }); 
 
 // ======================================================================================================================================================================================================
