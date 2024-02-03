@@ -5,6 +5,9 @@ import React, { useEffect, useState } from "react";
 import { IoMdAdd } from "react-icons/io";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { addGroup } from "@/redux/features/auth-slice";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/redux/store";
 
 interface Groups {
   _id: string; 
@@ -12,8 +15,8 @@ interface Groups {
 }
 
 const Add = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
-  const names = ["Bao", "Ruby", "Linh"];
   const [groups, setGroups] = useState<Groups[]>([]);
   const user_id = "65be7d6482b530c5e909f1f4" // @todo change ruby's user id to dynamic var
 
@@ -62,8 +65,10 @@ const Add = () => {
           >
             <div className="text-2xl">{group.name}</div>
             <div
-              onClick={async () => {
-                await joinGroup(group._id); 
+
+              onClick={() => {
+                dispatch(addGroup(group.name));
+                // set user.group to "group.name"
                 router.push("/home");
               }}
             >

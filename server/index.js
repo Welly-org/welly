@@ -46,6 +46,7 @@ app.get("/users/:user_id", async (req, res) => {
         await User.findOne({ _id: req.params.user_id })
         .populate("friends", ["username"])
         .populate("groups", "name")
+		.populate("groups")
         .exec()
         .then( user => {
           if(!user){

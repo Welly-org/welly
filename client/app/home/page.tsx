@@ -1,5 +1,8 @@
 "use client";
+import { useAppSelector } from "@/redux/store";
 import { Flex } from "@radix-ui/themes";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 import { VscTriangleLeft, VscTriangleRight } from "react-icons/vsc";
 import { Header } from "../components/Header";
 import { lily } from "../font";
@@ -11,7 +14,9 @@ import { useRouter } from "next/navigation";
 const Home = () => {
   const user_id = "65be7d6482b530c5e909f1f4" // @todo fetch user id from somewhere
   const router = useRouter();
-  const empty = true;
+  const user_id = useAppSelector((state) => state.authReducer.value._id);
+  console.log(user_id);
+  const empty = false;
 
   const [user, setUser] = useState({}); 
   const [isLoading, setIsLoading] = useState(true);
