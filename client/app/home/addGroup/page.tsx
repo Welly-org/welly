@@ -4,26 +4,29 @@ import { Flex } from "@radix-ui/themes";
 import React, { useEffect, useState } from "react";
 import { IoMdAdd } from "react-icons/io";
 import { useRouter } from "next/navigation";
-import axios from 'axios'; 
+import axios from "axios";
+
+interface Groups {
+  name: string;
+}
 
 const Add = () => {
   const router = useRouter();
   const names = ["Bao", "Ruby", "Linh"];
-  const [groups, setGroups ] = useState([]); 
-  
+  const [groups, setGroups] = useState<Groups[]>([]);
+
   const getGroups = async () => {
     try {
-      let res = await axios.get("http://localhost:4000/group"); 
-
+      let res = await axios.get("http://localhost:4000/group");
       setGroups(res.data);
-    } catch(err){
-      console.log(err)
+    } catch (err) {
+      console.log(err);
     }
-  }
+  };
 
   useEffect(() => {
-    getGroups()
-  }, []); 
+    getGroups();
+  }, []);
 
   return (
     <Flex
@@ -39,13 +42,13 @@ const Add = () => {
         justify="center"
         className="mt-10"
       >
-        {names.map((name) => (
+        {groups.map((group) => (
           <Flex
             justify="between"
             align="center"
             className="bg-orange w-80 h-16 rounded-lg px-6 mb-5 text-darkbrown"
           >
-            <div className="text-2xl">{name}</div>
+            <div className="text-2xl">{group.name}</div>
             <div
               onClick={() => {
                 router.push("/home");
