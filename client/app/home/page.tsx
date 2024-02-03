@@ -25,6 +25,14 @@ const Home = () => {
   //   const [money, setMoney] = useState(true);
   //   const [task, setTask] = useState(false);
 
+// const updateGroup = async (group_id: String) => {
+//   const jsonData = { "name": }
+//   try {
+//     let res = axios.post(`http://localhost:4000/group/${group_id}`)
+//   } catch(err){
+//     console.log(err);
+//   }
+// }
   return (
     <Flex
       direction="column"
