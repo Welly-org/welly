@@ -45,8 +45,7 @@ app.get("/users/:user_id", async (req, res) => {
       // find user
         await User.findOne({ _id: req.params.user_id })
         .populate("friends", ["username"])
-        .populate("groups", "name")
-		.populate("groups")
+		    .populate("groups", ["name", "pledge"])
         .exec()
         .then( user => {
           if(!user){
@@ -208,6 +207,20 @@ app.get("/group/:group_id/posts", async (req, res) => {
  * @desc Get all information about a group
  * @access Public
  */
+app.get("/group/:group_id/pledge", async(req, res) => {
+  try {
+    await Group.findOne({ _id: req.params.group_id })
+    .then(group => {
+      if(!group){
+        return res.status(404).json({ message: "Group not found"})
+      }
+      
+      return res.status(200).json({ pledge: group.pledge });
+    })
+  } catch(err){
+    res.status(500).json({ message: "Server Error"})
+  }
+})
 /**
  * @route GET /user/:user_id 
  * @desc Get all user information
@@ -276,8 +289,6 @@ app.post("/group/:group_id/join", jsonParser, async (req, res) => {
 
 app.post("/group/:group_id", jsonParser, async (req, res) => {
   try {
-	console.log(req.body); 
-	console.log("hit")
     await Group.findOne({ _id: req.params.group_id })
     .then(async group => {
       if(!group){
@@ -342,50 +353,46 @@ app.get("/posts", async (req, res) => {
  * @desc like a post
  * @access Public
  */
-app.post("/posts/:post_id/like", async (req, res) => {
+app.post("/posts/:post_id/like", jsonParser, async (req, res) => {
   try {
-    // find post 
-    let post = await Post.find({ _id: req.params.post_id })
+    await Post.findOne({ _id: req.params.post_id })
     .then(async post => {
       if(!post){
         return res.status(404).json({ message: "Post not found"}); 
       }
-
-      post.likes += 1; 
       
+      post.likes += 1
+
       await post.save(); 
       res.status(200).json(post);
     });
-  } catch(err){
-    console.log(err.message); 
-    res.status(500).json({ message: "Server Error"})
-  }
-}); 
+} catch(err){
+  console.log(err.message); 
+  res.status(500).json({ message: "Server Error"})
+}}); 
 
 /**
- * @route POST /posts/:post_id/like
- * @desc like a post
+ * @route POST /posts/:post_id/unlike
+ * @desc unlike a post
  * @access Public
  */
-app.post("/posts/:post_id/unlike", async (req, res) => {
+app.post("/posts/:post_id/unlike", jsonParser, async (req, res) => {
   try {
-    // find post 
-    let post = await Post.find({ _id: req.params.post_id })
+    await Post.findOne({ _id: req.params.post_id })
     .then(async post => {
       if(!post){
         return res.status(404).json({ message: "Post not found"}); 
       }
-
-      post.likes -= 1; 
       
+      post.likes -= 1
+
       await post.save(); 
       res.status(200).json(post);
     });
-  } catch(err){
-    console.log(err.message); 
-    res.status(500).json({ message: "Server Error"})
-  }
-}); 
+} catch(err){
+  console.log(err.message); 
+  res.status(500).json({ message: "Server Error"})
+}}); 
 
 /* @route POST /users/:user_id/friend
 * @desc Add a friend
