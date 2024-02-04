@@ -13,10 +13,6 @@ interface Group {
   name: string;
 }
 
-interface UserPosts {
-  posts: Array<Post>;
-}
-
 interface Post {
   id: string; 
   photo: string;

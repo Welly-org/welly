@@ -12,6 +12,12 @@ interface User {
 interface Group {
   name: string;
 }
+
+interface Post {
+  id: string; 
+  photo: string;
+}
+
 const Profile = () => {
   const user_id = useAppSelector((state) => state.authReducer.value._id);
 
@@ -31,9 +37,29 @@ const Profile = () => {
       console.log(err);
     }
   };
+  const [posts, setPosts] = useState<Post[]>([]);
+
+
+  const getPosts = async () => {
+    try {
+      let res = await axios.get(`http://localhost:4000/users/${id}/posts`);
+      
+      setPosts((prevPosts) => [
+        ...prevPosts,
+        ...res.data.posts.map((post: Post) => ({
+          id: post.id,
+          photo: post.photo,
+        })),
+      ]);
+
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
     getUser();
+    getPosts();
   }, []);
 
   return (
@@ -59,8 +85,8 @@ const Profile = () => {
         </Flex>
         <div className="mt-4 text-winered">{user.name}</div>
       </Flex>
-      <div className="text-darkbrown mt-11 text-3xl">Your groups</div>
-      <Flex direction="column" className="mt-4">
+      <div className="text-darkbrown mt-6 text-3xl">Your groups</div>
+      <Flex direction="column">
         {user.groups.map((group, index) => (
           <div key={index}>
             <Flex className="bg-orange text-2xl mt-6 py-3 text-darkbrown w-80 px-7 rounded-full">
@@ -69,6 +95,21 @@ const Profile = () => {
           </div>
         ))}
       </Flex>
+      <div className="mt-6 grid grid-cols-3 gap-2">
+        {posts.map((post, index) => {
+          console.log(posts)
+          return(
+          <div
+            key={index}
+            className="relative rounded w-24 h-24 overflow-hidden aspect-w-1 aspect-h-1"
+          >
+            <img
+              src={post.photo}
+              className="absolute top-0 left-0 w-full h-full object-cover"
+            />
+          </div>
+        )})}
+      </div>
     </Flex>
   );
 };
