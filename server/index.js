@@ -256,6 +256,7 @@ app.get("/group/:group_id", async (req, res) => {
 app.get("/username/:username", async (req, res) => {
   try { 
     await User.findOne({ username: req.params.username })
+    .populate("groups", ["name"])
     .then(user => {
       if(!user){
         return res.status(404).json({ message: "User not found"})

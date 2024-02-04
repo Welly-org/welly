@@ -13,11 +13,12 @@ interface Group {
   name: string;
 }
 
-interface Post {
-  posts: Array<PostInfo>;
+interface UserPosts {
+  posts: Array<Post>;
 }
 
-interface PostInfo {
+interface Post {
+  id: string; 
   photo: string;
 }
 
@@ -28,7 +29,7 @@ const ProfileOthers = () => {
     name: "",
     groups: [],
   });
-  const [posts, setPosts] = useState<Post[]>([]);
+  const [posts, setPosts] = useState<UserPosts[]>([]);
 
   const getUser = async () => {
     try {
@@ -37,7 +38,8 @@ const ProfileOthers = () => {
         name: res.data.username,
         groups: res.data.groups,
       });
-      console.log(res.data);
+      console.log("posts")
+      console.log(posts);
     } catch (err) {
       console.log(err);
     }
@@ -46,9 +48,14 @@ const ProfileOthers = () => {
   const getPosts = async () => {
     try {
       let res = await axios.get(`http://localhost:4000/users/${id}/posts`);
-      setPosts({
-        posts: res.data,
-      });
+      setPosts([
+        {
+        posts: res.data.posts.map((post: Post) => ({
+          id: post.id, 
+          photo: post.photo,
+        })),
+      },
+    ]);
       console.log(res.data);
     } catch (err) {
       console.log(err);
@@ -59,6 +66,7 @@ const ProfileOthers = () => {
     console.log("FROM USEEFFECT");
 
     getUser();
+    getPosts(); 
   }, []);
 
   return (
@@ -94,8 +102,8 @@ const ProfileOthers = () => {
           </div>
         ))}
       </Flex>
-      <div className="grid grid-cols-3 gap-4">
-        {user.posts.map((post, index) => (
+      {/* <div className="grid grid-cols-3 gap-4">
+        {posts.posts.map((post, index) => (
           <div
             key={index}
             className="relative overflow-hidden aspect-w-1 aspect-h-1"
@@ -107,7 +115,7 @@ const ProfileOthers = () => {
             />
           </div>
         ))}
-      </div>
+      </div> */}
     </Flex>
   );
 };
