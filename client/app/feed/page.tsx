@@ -1,22 +1,27 @@
-'use client'
+"use client";
 import { Flex } from "@radix-ui/themes";
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { lily } from "../font";
 import Post from "./post";
 
-const progress = [25, 30, 49, 69, 12, 33];
-const tags = ["beach trip", "weekend", "happy"];
-
 const Feed = () => {
   const [posts, setPosts] = useState([]);
+  const [stories, setStory] = useState([]);
+
   const getPosts = async () => {
-    let res = await axios.get("http://localhost:4000/posts"); 
+    let res = await axios.get("http://localhost:4000/posts");
     setPosts(res.data);
-  }
+  };
+  const getStory = async () => {
+    let res = await axios.get("http://localhost:4000/topusers");
+    setStory(res.data);
+    console.log(res.data);
+  };
   useEffect(() => {
     getPosts();
-  }, []); 
+    getStory();
+  }, []);
   return (
     <Flex
       direction="column"
@@ -30,17 +35,17 @@ const Feed = () => {
             <div className={lily.className}>Welly</div>
           </div>
           <Flex className="storyBox">
-            {progress.map((number) => (
+            {stories.map((story) => (
               <Flex direction="column" align="center" className="mr-4">
                 <Flex
                   className="rounded-full w-14 h-14 border-4 border-winered"
                   align="center"
                   justify="center"
                 >
-                  <div className="text-winered">{number}%</div>
+                  <div className="text-winered">{story.progress}%</div>
                 </Flex>
                 <div className="color-winered text-xs text-winered">
-                  <div className={lily.className}>name</div>
+                  <div className={lily.className}>{story.username}</div>
                 </div>
               </Flex>
             ))}

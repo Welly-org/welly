@@ -1,11 +1,10 @@
 "use client";
+import { logOut } from "@/redux/features/auth-slice";
+import { AppDispatch } from "@/redux/store";
 import { Flex } from "@radix-ui/themes";
-import React from "react";
-import { Header } from "../components/Header";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/redux/store";
-import { logOut } from "@/redux/features/auth-slice";
+import { Header } from "../components/Header";
 
 const pages = ["PROFILE", "SETTINGS", "PRIVACY", "LEGAL", "ABOUT", "LOGOUT"];
 
