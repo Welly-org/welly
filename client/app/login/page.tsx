@@ -32,7 +32,7 @@ const Login = () => {
             name: res.data.groups[0].name,
           })
         );
-        router.push("/home");
+        router.push("/feed");
       }
     } catch (err) {
       console.log(err);

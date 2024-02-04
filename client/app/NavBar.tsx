@@ -11,16 +11,17 @@ const NavBar = () => {
   return (
     <nav className="bg-orange h-16 w-full">
       <Flex className="h-full px-4" align="center" justify="between">
-        <Link href="/home" className="cursor-pointer">
-          <IoMdHome
-            size={40}
-            color={currentPath === "/home" ? "#F68D96" : "#ffffff"}
-          />
-        </Link>
         <Link href="/feed" className="cursor-pointer">
           <IoNewspaper
             size={40}
             color={currentPath === "/feed" ? "#F68D96" : "#ffffff"}
+          />
+        </Link>
+
+        <Link href="/friends" className="cursor-pointer">
+          <FaUserFriends
+            size={40}
+            color={currentPath === "/friends" ? "#F68D96" : "#ffffff"}
           />
         </Link>
         <Flex
@@ -30,10 +31,10 @@ const NavBar = () => {
         >
           <FaPlus color="#ffffff" size={50} />
         </Flex>
-        <Link href="/friends" className="cursor-pointer">
-          <FaUserFriends
+        <Link href="/home" className="cursor-pointer">
+          <IoMdHome
             size={40}
-            color={currentPath === "/friends" ? "#F68D96" : "#ffffff"}
+            color={currentPath === "/home" ? "#F68D96" : "#ffffff"}
           />
         </Link>
         <Link href="/menu" className="cursor-pointer">

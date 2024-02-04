@@ -1,10 +1,9 @@
 "use client";
-import { Flex } from "@radix-ui/themes";
-import { Header } from "../components/Header";
-import friends from "./Friends.json";
 import { useAppSelector } from "@/redux/store";
+import { Flex } from "@radix-ui/themes";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Header } from "../components/Header";
 interface Friend {
   username: string;
 }
@@ -36,15 +35,25 @@ const Friends = () => {
     >
       <Header header="friends" />
       <Flex></Flex>
-      <div className="friendsBox">
-        <Flex direction="column" className="mt-10">
-          {friends.map((friend) => (
-            <div className="bg-orange w-80 h-18 rounded-3xl py-3 px-5 mb-4">
-              <div className="text-winered text-3xl">{friend.username}</div>
+      {friends.length === 0 ? (
+        <div className="friendsBox">
+          <Flex direction="column" className="mt-10">
+            <div className="bg-orange w-80 h-18 rounded-4xl py-3 px-5 mb-4 text-center rounded cursor-pointer">
+              <div className="text-winered text-3xl">+</div>
             </div>
-          ))}
-        </Flex>
-      </div>
+          </Flex>
+        </div>
+      ) : (
+        <div className="friendsBox">
+          <Flex direction="column" className="mt-10">
+            {friends.map((friend) => (
+              <div className="bg-orange w-80 h-18 rounded-3xl py-3 px-5 mb-4">
+                <div className="text-winered text-3xl">{friend.username}</div>
+              </div>
+            ))}
+          </Flex>
+        </div>
+      )}
     </Flex>
   );
 };

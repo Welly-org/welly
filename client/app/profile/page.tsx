@@ -14,12 +14,13 @@ interface Group {
 }
 
 interface Post {
-  id: string; 
+  id: string;
   photo: string;
 }
 
 const Profile = () => {
   const user_id = useAppSelector((state) => state.authReducer.value._id);
+  const [posts, setPosts] = useState<Post[]>([]);
 
   const [user, setUser] = useState<User>({
     name: "",
@@ -37,13 +38,11 @@ const Profile = () => {
       console.log(err);
     }
   };
-  const [posts, setPosts] = useState<Post[]>([]);
-
 
   const getPosts = async () => {
     try {
-      let res = await axios.get(`http://localhost:4000/users/${id}/posts`);
-      
+      let res = await axios.get(`http://localhost:4000/users/${user_id}/posts`);
+
       setPosts((prevPosts) => [
         ...prevPosts,
         ...res.data.posts.map((post: Post) => ({
@@ -51,7 +50,6 @@ const Profile = () => {
           photo: post.photo,
         })),
       ]);
-
     } catch (err) {
       console.log(err);
     }
@@ -97,18 +95,19 @@ const Profile = () => {
       </Flex>
       <div className="mt-6 grid grid-cols-3 gap-2">
         {posts.map((post, index) => {
-          console.log(posts)
-          return(
-          <div
-            key={index}
-            className="relative rounded w-24 h-24 overflow-hidden aspect-w-1 aspect-h-1"
-          >
-            <img
-              src={post.photo}
-              className="absolute top-0 left-0 w-full h-full object-cover"
-            />
-          </div>
-        )})}
+          console.log(posts);
+          return (
+            <div
+              key={index}
+              className="relative rounded w-24 h-24 overflow-hidden aspect-w-1 aspect-h-1"
+            >
+              <img
+                src={post.photo}
+                className="absolute top-0 left-0 w-full h-full object-cover"
+              />
+            </div>
+          );
+        })}
       </div>
     </Flex>
   );

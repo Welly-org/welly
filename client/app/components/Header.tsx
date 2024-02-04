@@ -3,5 +3,7 @@ interface Props {
 }
 
 export const Header = ({ header }: Props) => {
-  return <div className="pt-11 text-5xl text-darkbrown">{header}</div>;
+  return (
+    <div className="pt-11 text-5xl text-center text-darkbrown">{header}</div>
+  );
 };
