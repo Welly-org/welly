@@ -31,13 +31,14 @@ const Home = () => {
   };
 
   const getPledge = async () => {
-    if (user.groups[0]._id != null) {
+    if (user.groups.length != 0) {
       try {
         const res = await axios.get(
           `http://localhost:4000/group/${user.groups[0]._id}/pledge`
         );
-
+        console.log(res);
         setPledge(res.data.pledge);
+        setAmount(res.data.pledge);
       } catch (err) {
         console.log(err);
       }
@@ -45,7 +46,6 @@ const Home = () => {
   };
   useEffect(() => {
     getPledge();
-    console.log(user.groups);
   }, []);
 
   return (
@@ -57,7 +57,7 @@ const Home = () => {
     >
       <Flex direction="column" align="center">
         <Flex direction="column" align="center">
-          <Header header={empty ? "Group Name" : user.groups[0]}></Header>
+          <Header header={empty ? "Group Name" : user.groups[0].name}></Header>
           <div>
             <Flex
               className="rounded-full w-60 h-60 mt-7 bg-winered"
@@ -75,7 +75,7 @@ const Home = () => {
                       type="number"
                       placeholder="Enter amount"
                       className="bg-transparent w-fit text-center focus:outline-none"
-                      value={pledge}
+                      value={amount}
                       disabled={selected}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         setAmount(parseInt(e.target.value));

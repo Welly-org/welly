@@ -1,9 +1,34 @@
+"use client";
 import { Flex } from "@radix-ui/themes";
 import { Header } from "../components/Header";
 import friends from "./Friends.json";
+import { useAppSelector } from "@/redux/store";
+import axios from "axios";
+import { useState, useEffect } from "react";
+interface Friend {
+  username: string;
+}
 
 const Friends = () => {
-  const empty = friends.length === 0;
+  const user_id = useAppSelector((state) => state.authReducer.value._id);
+  const [friends, setFriends] = useState<Friend[]>([]);
+  const getUser = async () => {
+    try {
+      const res = await axios.get(`http://localhost:4000/users/${user_id}`);
+
+      setFriends(res.data.friends);
+      console.log(friends);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    console.log(user_id);
+    getUser();
+    console.log(user_id);
+  }, []);
+
   return (
     <Flex
       direction="column"

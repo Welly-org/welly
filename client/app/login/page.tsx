@@ -26,7 +26,12 @@ const Login = () => {
         console.log(res.data);
         dispatch(logIn(res.data._id));
         dispatch(setName(res.data.username));
-        // addGroup({ _id: res.data.groups[0], name: res.data.groups})
+        dispatch(
+          addGroup({
+            _id: res.data.groups[0]._id,
+            name: res.data.groups[0].name,
+          })
+        );
         router.push("/home");
       }
     } catch (err) {
