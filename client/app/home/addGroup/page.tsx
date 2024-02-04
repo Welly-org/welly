@@ -72,9 +72,7 @@ const Add = () => {
               onClick={async () => {
                 console.log("clicked");
                 await joinGroup(group._id);
-                dispatch(
-                  addGroup({ _id: group._id, name: group.name, pledge: 0 })
-                );
+                dispatch(addGroup({ _id: group._id, name: group.name }));
                 // set user.group to "group.name"
                 router.push("/home");
               }}

@@ -4,6 +4,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { lily } from "../font";
 import Post from "./post";
+import Link from "next/link";
 
 const Feed = () => {
   const [posts, setPosts] = useState([]);
@@ -45,7 +46,11 @@ const Feed = () => {
                   <div className="text-winered">{story.progress}%</div>
                 </Flex>
                 <div className="color-winered text-xs text-winered">
-                  <div className={lily.className}>{story.username}</div>
+                  <div className={lily.className}>
+                    <Link href={`/profileOthers?search=${story._id}`}>
+                      {story.username}
+                    </Link>
+                  </div>
                 </div>
               </Flex>
             ))}

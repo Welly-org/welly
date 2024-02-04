@@ -19,7 +19,9 @@ export default function RootLayout({
           <main className="w-full h-full">
             <ReduxProvider>{children}</ReduxProvider>
           </main>
-          {currentPath === "/" || currentPath === "/registration" ? (
+          {currentPath === "/" ||
+          currentPath === "/registration" ||
+          currentPath === "/login" ? (
             <></>
           ) : (
             <NavBar />

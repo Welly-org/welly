@@ -45,7 +45,7 @@ const Home = () => {
   };
   useEffect(() => {
     getPledge();
-    console.log(pledge);
+    console.log(user.groups);
   }, []);
 
   return (
@@ -57,7 +57,7 @@ const Home = () => {
     >
       <Flex direction="column" align="center">
         <Flex direction="column" align="center">
-          <Header header={empty ? "Group Name" : user.groups[0].name}></Header>
+          <Header header={empty ? "Group Name" : user.groups[0]}></Header>
           <div>
             <Flex
               className="rounded-full w-60 h-60 mt-7 bg-winered"

@@ -1,4 +1,5 @@
 "use client";
+import { useAppSelector } from "@/redux/store";
 import { Flex } from "@radix-ui/themes";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -12,6 +13,8 @@ interface Group {
   name: string;
 }
 const Profile = () => {
+  const user_id = useAppSelector((state) => state.authReducer.value._id);
+
   const [user, setUser] = useState<User>({
     name: "",
     groups: [],
@@ -19,7 +22,7 @@ const Profile = () => {
 
   const getUser = async () => {
     try {
-      let res = await axios.get(`http://localhost:4000/users/${id}`);
+      let res = await axios.get(`http://localhost:4000/users/${user_id}`);
       setUser({
         name: res.data.username,
         groups: res.data.groups,
