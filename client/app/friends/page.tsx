@@ -17,16 +17,14 @@ const Friends = () => {
       const res = await axios.get(`http://localhost:4000/users/${user_id}`);
 
       setFriends(res.data.friends);
-      console.log(friends);
+      console.log(res);
     } catch (err) {
       console.log(err);
     }
   };
 
   useEffect(() => {
-    console.log(user_id);
     getUser();
-    console.log(user_id);
   }, []);
 
   return (
@@ -42,7 +40,7 @@ const Friends = () => {
         <Flex direction="column" className="mt-10">
           {friends.map((friend) => (
             <div className="bg-orange w-80 h-18 rounded-3xl py-3 px-5 mb-4">
-              <div className="text-winered text-3xl">{friend.name}</div>
+              <div className="text-winered text-3xl">{friend.username}</div>
             </div>
           ))}
         </Flex>
