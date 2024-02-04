@@ -30,7 +30,7 @@ const Feed = () => {
       className="bg-beige w-full h-full"
     >
       <Flex direction="column" className="w-full" align="start">
-        <Flex className="mt-7 pl-4" direction="column">
+        <Flex className="mt-7 px-4" direction="column">
           <div className="text-pink text-2xl">
             <div className={lily.className}>Welly</div>
           </div>
