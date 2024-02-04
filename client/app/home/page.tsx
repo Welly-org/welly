@@ -31,14 +31,16 @@ const Home = () => {
   };
 
   const getPledge = async () => {
-    console.log(user.groups[0]._id);
-    try {
-      const res = await axios.get(
-        `http://localhost:4000/group/${user.groups[0]._id}/pledge`
-      );
-      setPledge(res.data.pledge);
-    } catch (err) {
-      console.log(err);
+    if (user.groups[0]._id != null) {
+      try {
+        const res = await axios.get(
+          `http://localhost:4000/group/${user.groups[0]._id}/pledge`
+        );
+
+        setPledge(res.data.pledge);
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
   useEffect(() => {
@@ -119,16 +121,16 @@ const Home = () => {
                 {selected ? "Add to well" : "Confirm"}
               </div>
             ) : (
-                  <div
-                    className="bg-orange text-darkbrown rounded-xl 
+              <div
+                className="bg-orange text-darkbrown rounded-xl 
 				  px-10 py-2 mt-5 text-2xl cursor-pointer"
-                    onClick={() => {
-                      router.push("/home/addTask");
-                      setTask(false);
-                    }}
-                  >
-                    Add task
-                  </div>
+                onClick={() => {
+                  router.push("/home/addTask");
+                  setTask(false);
+                }}
+              >
+                Add task
+              </div>
             )}
             <Flex direction="column">
               {Progress.map((progress) => (
