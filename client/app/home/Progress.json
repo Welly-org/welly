@@ -1,21 +1,21 @@
 [
 	{
 		"name": "PER 1",
-		"progress" : 96
+		"progress" : 0
 	},
 
 	{
 		"name": "PER 2",
-		"progress" : 74
+		"progress" : 0
 	},
 
 	{
 		"name": "PER 3",
-		"progress" : 56
+		"progress" : 0
 	},
 
 	{
 		"name": "PER 4",
-		"progress" : 13
+		"progress" : 0
 	}
 ]

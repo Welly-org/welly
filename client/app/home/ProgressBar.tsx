@@ -9,14 +9,14 @@ const ProgressBar = ({ percentage }: Props) => {
     <div className="ml-7">
       <div className="w-60 h-6 bg-gray rounded-lg">
         <Flex
-          justify="center"
+          justify="start"
           align="center"
           className="bg-pink h-full rounded-lg"
           style={{
             width: `${percentage}%`,
           }}
         >
-          <div className="text-white text-xs font-thin">{percentage}%</div>
+          <div className="text-white text-xs px-3 font-thin">{percentage}%</div>
         </Flex>
       </div>
     </div>

@@ -9,7 +9,7 @@ type AuthState = {
 	username: string;
 	progress: number;
 	groups: Group[];
-	friends: []
+	friends: [];
 }
 
 type Group = {
@@ -23,7 +23,7 @@ const initialState = {
 		username: "",
 		progress: 0,
 		groups: [],
-		friends: []
+		friends: [],
 	} as AuthState, 
 } as InitialState; 
 

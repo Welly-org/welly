@@ -43,6 +43,14 @@ const AddTask = () => {
               <div>0/{task.progress}</div>
             </Flex>
           ))}
+          <Flex
+            justify="center"
+            align="center"
+            className="bg-darkorange px-4 mb-4 rounded-xl 
+			text-white w-80 h-16 text-4xl cursor-pointer"
+          >
+            +
+          </Flex>
         </Flex>
       </Flex>
       <Flex className="w-full p-4" justify="end">

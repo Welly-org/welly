@@ -277,7 +277,6 @@ app.post("/group/:group_id/join", jsonParser, async (req, res) => {
 app.post("/group/:group_id", jsonParser, async (req, res) => {
   try {
 	console.log(req.body); 
-	console.log("hit")
     await Group.findOne({ _id: req.params.group_id })
     .then(async group => {
       if(!group){
