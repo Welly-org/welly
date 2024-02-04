@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Flex } from "@radix-ui/themes";
 import { FaRegHeart,FaHeart } from "react-icons/fa";
 import axios from 'axios';
@@ -53,12 +53,12 @@ const Post = (post) => {
                     justify="center"
                   >
                     <FaHeart className="w-8" size="20" />
-                    <div>{post.likes}</div>
+                    <div>{toggled ? post.post.likes + 1 : post.post.likes}</div>
                   </Flex>
                 </Flex>
                 <div className="w-80 bg-cover h-80 rounded-3xl bg-gray mt-2 flex items-end justify-start" style={{ backgroundImage: `url(${post.post.photo})` }}>
                 <Flex
-                    className={`${toggled ? "bg-white" : "bg-winered"} w-8 h-8 rounded-full cursor-pointer m-3`}
+                    className={"bg-winered w-8 h-8 rounded-full cursor-pointer m-3"}
                     align="center"
                     justify="center"
                     onClick = {async () => {
@@ -72,7 +72,7 @@ const Post = (post) => {
                         // like button
                     }}
                   >
-                    <FaRegHeart className="w-8" color="#ffffff" size="15" />
+                    {toggled ? <FaHeart className="w-8" color="#ffffff" size="15" /> : <FaRegHeart className="w-8" color="#ffffff" size="15" />}
                   </Flex>
                 </div>
                 {/* <Flex className="tagbox" align="center">
