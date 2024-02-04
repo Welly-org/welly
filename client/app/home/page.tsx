@@ -1,40 +1,50 @@
 "use client";
 import { useAppSelector } from "@/redux/store";
 import { Flex } from "@radix-ui/themes";
+import axios from "axios";
 import { useRouter } from "next/navigation";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { VscTriangleLeft, VscTriangleRight } from "react-icons/vsc";
 import { Header } from "../components/Header";
 import { lily } from "../font";
 import Progress from "./Progress.json";
 import ProgressBar from "./ProgressBar";
-import { group } from "console";
-import axios from "axios";
 
 const Home = () => {
   const router = useRouter();
   const user = useAppSelector((state) => state.authReducer.value);
-  const [groups, setGroups] = useState([{ id: 0, name: "group 1", pledge: 0 }]);
   const empty =
     useAppSelector((state) => state.authReducer.value.groups).length === 0;
   const [amount, setAmount] = useState(0);
+  const [pledge, setPledge] = useState(0);
   const [selected, setSelected] = useState(true);
   const [task, setTask] = useState(true);
-  //   const [amount, setAmount] = useState(30);
-  //   const [selected, setSelected] = useState(true);
-  //   const [money, setMoney] = useState(true);
-  //   const [task, setTask] = useState(false);
 
   const updateGroup = async (name: String, group_id: String) => {
     const jsonData = { name: name, pledge: amount };
     try {
-      let res = axios.post(`http://localhost:4000/group/${group_id}`, jsonData);
-      console.log(res);
-      console.log(jsonData);
+      axios.post(`http://localhost:4000/group/${group_id}`, jsonData);
+      setPledge(jsonData.pledge);
     } catch (err) {
       console.log(err);
     }
   };
+
+  const getPledge = async () => {
+    console.log(user.groups[0]._id);
+    try {
+      const res = await axios.get(
+        `http://localhost:4000/group/${user.groups[0]._id}/pledge`
+      );
+      setPledge(res.data.pledge);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    getPledge();
+    console.log(pledge);
+  }, []);
 
   return (
     <Flex
@@ -45,7 +55,7 @@ const Home = () => {
     >
       <Flex direction="column" align="center">
         <Flex direction="column" align="center">
-          <Header header={empty ? "Group Name" : groups[0].name}></Header>
+          <Header header={empty ? "Group Name" : user.groups[0].name}></Header>
           <div>
             <Flex
               className="rounded-full w-60 h-60 mt-7 bg-winered"
@@ -91,7 +101,7 @@ const Home = () => {
           </>
         ) : (
           <>
-            {groups[0].pledge === 0 ? (
+            {pledge === 0 ? (
               <div
                 className="bg-orange text-darkbrown rounded-xl 
 				  px-10 py-2 mt-5 text-2xl cursor-pointer"

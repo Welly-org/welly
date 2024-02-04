@@ -1,13 +1,13 @@
 "use client";
 import { Header } from "@/app/components/Header";
-import { Flex } from "@radix-ui/themes";
-import React, { useEffect, useState } from "react";
-import { IoMdAdd } from "react-icons/io";
-import { useRouter } from "next/navigation";
-import axios from "axios";
 import { addGroup } from "@/redux/features/auth-slice";
-import { useDispatch } from "react-redux";
 import { AppDispatch, useAppSelector } from "@/redux/store";
+import { Flex } from "@radix-ui/themes";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { IoMdAdd } from "react-icons/io";
+import { useDispatch } from "react-redux";
 
 interface Groups {
   _id: string;
@@ -72,7 +72,9 @@ const Add = () => {
               onClick={async () => {
                 console.log("clicked");
                 await joinGroup(group._id);
-                dispatch(addGroup({ _id: group._id, name: group.name }));
+                dispatch(
+                  addGroup({ _id: group._id, name: group.name, pledge: 0 })
+                );
                 // set user.group to "group.name"
                 router.push("/home");
               }}
