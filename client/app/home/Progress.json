@@ -1,21 +1,21 @@
 [
 	{
-		"name": "PER 1",
-		"progress" : 0
+		"name": "Jack",
+		"progress" : 25
 	},
 
 	{
-		"name": "PER 2",
-		"progress" : 0
+		"name": "Linh",
+		"progress" : 32
 	},
 
 	{
-		"name": "PER 3",
-		"progress" : 0
+		"name": "Ruby",
+		"progress" : 93
 	},
 
 	{
-		"name": "PER 4",
-		"progress" : 0
+		"name": "Dave",
+		"progress" : 40
 	}
 ]

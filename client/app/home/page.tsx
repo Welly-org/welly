@@ -73,7 +73,7 @@ const Home = () => {
                       type="number"
                       placeholder="Enter amount"
                       className="bg-transparent w-fit text-center focus:outline-none"
-                      value={amount}
+                      value={pledge}
                       disabled={selected}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         setAmount(parseInt(e.target.value));
@@ -119,8 +119,6 @@ const Home = () => {
                 {selected ? "Add to well" : "Confirm"}
               </div>
             ) : (
-              <>
-                {task ? (
                   <div
                     className="bg-orange text-darkbrown rounded-xl 
 				  px-10 py-2 mt-5 text-2xl cursor-pointer"
@@ -131,10 +129,6 @@ const Home = () => {
                   >
                     Add task
                   </div>
-                ) : (
-                  <div className="text-4xl text-brown mt-6">progress</div>
-                )}
-              </>
             )}
             <Flex direction="column">
               {Progress.map((progress) => (

@@ -1,13 +1,13 @@
 "use client";
+import { logIn, setName } from "@/redux/features/auth-slice";
+import { AppDispatch } from "@/redux/store";
 import { Flex } from "@radix-ui/themes";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
-import { lily } from "../font";
-import { useRouter } from "next/navigation";
-import axios from "axios";
-import { logIn, setName } from "@/redux/features/auth-slice";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/redux/store";
+import { lily } from "../font";
 
 interface User {
   username: string;
@@ -16,15 +16,8 @@ interface User {
 const Login = () => {
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
-  const questions = [
-    "Enter your username"
-  ];
-  const [page, setPage] = useState(0);
-  const [success, setSuccess ] = useState(false)
-  const [state, setState] = useState<User>({
-    username: "",
-    group: "",
-  });
+  const [success, setSuccess] = useState(false)
+  const [username, setUsername] = useState("")
 
   const getUser = async (username: String) => {
     try {
@@ -32,68 +25,49 @@ const Login = () => {
         if (res.status != 200) {
             setSuccess(false);
         } else {
-            setSuccess(true)
+            dispatch(logIn(res.data._id));
+            dispatch(setName(res.data.username));
+            router.push('/home')
         }
     } catch(err){
         console.log(err)
         setSuccess(false)
     }
   }
-
-  const renderContent = () => {
-    switch (page) {
-      case 0:
         return (
-          <>
+          <Flex
+      direction="column"
+      align="center"
+      justify="center"
+      className="bg-pink w-full h-full"
+    >
+    <div className="text-beige font-normal text-6xl">
+      <div className={lily.className}>Welly</div>
+    </div>
+    <div className="mt-10">
             <input
               type="text"
               placeholder="Enter your username"
               className="registrationInput"
-              value={state.username}
+              value={username}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setState((prevState) => ({
-                  ...prevState,
-                  username: e.target.value,
-                }));
+                setUsername(e.target.value)
               }}
-            />
+            /></div>
             <Flex
               justify="center"
               align="center"
               className="registrationArrow"
               onClick={async () => {
-                await getUser(state.username)
-                if(success){
-                    setPage((prevPage) => prevPage + 1);
-                }
+                await getUser(username)
               }}
             >
-
-            { !success ? <div>Login failed </div> : <div></div>}
-
-              <FaArrowRightLong size={50} />
+              Login
             </Flex>
-          </>
+          </Flex>
         );
-        case 1:
-  return (
-    <Flex
-      direction="column"
-      align="center"
-      justify="between"
-      className="bg-pink w-full h-full px-4 pt-24 pb-40"
-    >
-      <Flex
-        justify="center"
-        className="text-beige leading-normal text-center w-full text-5xl"
-      >
-        <div className={lily.className}>{questions[page]}</div>
-      </Flex>
-      <div>{renderContent()}</div>
-    </Flex>
-  );
-    }
+        
   }
-};
+;
 
 export default Login;
