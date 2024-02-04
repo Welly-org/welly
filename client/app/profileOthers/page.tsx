@@ -11,7 +11,7 @@ interface User {
 interface Group {
   name: string;
 }
-const Profile = () => {
+const ProfileOthers = () => {
   const [user, setUser] = useState<User>({
     name: "",
     groups: [],
@@ -70,4 +70,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default ProfileOthers;
