@@ -248,6 +248,27 @@ app.get("/group/:group_id", async (req, res) => {
 }); 
 
 /**
+ * @route GET /username/:user_id
+ * @desc Get a user by existing username
+ * @access Public
+ */
+
+app.get("/username/:username", async (req, res) => {
+  try { 
+    await User.findOne({ username: req.params.username })
+    .then(user => {
+      if(!user){
+        return res.status(404).json({ message: "User not found"})
+      }
+
+      res.status(200).json(user); 
+    })
+  } catch(err){
+    console.log(err.message);
+    res.status(500).json({ message: "Server Error"})
+  }
+})
+/**
  * @route POST /group/:group_id/join
  * @desc Join a group
  * @access Public
